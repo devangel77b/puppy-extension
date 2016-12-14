@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Make America Puppies Again",
+    "description": "Replaces images of Donald Trump with guide dog puppies.",
+    "version": "0.0.0",
+//   "update_url": "https://clients2.google.com/service/update2/crx",
+
+
+    "browser_action": {
+	"default_icon": "up48.png",
+	"default_popup": "ui.html"
+    },
+    "content_scripts": [ {
+	"js": [ "trump.js" ],
+	"matches": [ "http://*/*" ]
+    } ],
+    "icons": {
+	"128": "up128.png",
+	"48": "up48.png"
+    },
+    /*   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl/ZXQNyZum2YHi/IKFZZYWHSyf5iITSGJ62AfXJm3XT86x8lNQhn5KRIHd6MVsCo13LPP4ze3FyRlMR0LJNKGY4zO7loBty55332jQuTsG6KY5wcTd2NYBkIs1smoFymFDyLEvmhF8+qVSkJx3sGPL2ANZoigx57HYR3OtgShUXk4Bod2GMXjZTM8ZqLe9/ZQu8nSw3gnOV8pts+gHigndanKCxW6a8OmnHleRamgxdEPQl5zD3rENSpEg2pGqXXfztFcOtCjk3MLI5ClqxADGs4g+KUpudP8XHfUvrxNW6DxGhbywLF7rgdgpiMfRAstt/YkY8r7DHbWIcZXG6Y8wIDAQAB", */
+
+
+    
+    "permissions": [
+//	"activeTab",
+//	"https://ajax.googleapis.com/",
+	"http://www.teaandkittens.co.uk/"
+    ]
+}
