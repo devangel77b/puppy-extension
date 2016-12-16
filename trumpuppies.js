@@ -1,4 +1,4 @@
-// trumpuppies.js - part of ukitten
+﻿// trumpuppies.js - part of ukitten
 // by Tom Royal 
 // tomroyal.com
 
@@ -19,7 +19,7 @@ function getPuppies() {
 	"&tags=guide+dog+puppy"+
 	"&tag_mode=all"+
 	"&per_page=32"+
-	";
+	"&asynchronous=false";
    
     jQuery.getJSON(URL, function(data){
 
