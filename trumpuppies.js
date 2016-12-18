@@ -8,32 +8,9 @@
 
 
 
-
-// function to get images from Flickr
-function getPuppies() {
-    
-    // get puppies from Flickr
-    var URL = "https://api.flickr.com/services/rest"+
-	"?method=flickr.photos.search"+
-	"&api_key={{262e2d8627a867729fa6c0bd0f0a2672}}"+
-	"&tags=guide+dog+puppy"+
-	"&tag_mode=all"+
-	"&per_page=32"+
-	"&asynchronous=false";
-   
-    jQuery.getJSON(URL, function(data){
-
-	jQuery.each(data.photos.photo, function(i,item){
-	    var img_src = "http://farm"+item.farm+
-		".static.flickr.com/"+item.server+
-		"/"+item.id+
-		"_"+item.secret+
-		"_m.jpg";
-	});
-    });
-}
-
-
+// get the puppies from Flickr
+//var thePuppies = [];
+// initialize thePuppies with a default value
 var thePuppies = [
       { "id": "31250921235", "owner": "123726763@N08", "secret": "74be4f8c2f", "server": "5828", "farm": 6, "title": "Wilbur 15 months", "ispublic": 1, "isfriend": 0, "isfamily": 0 },
       { "id": "30757405056", "owner": "62624768@N02", "secret": "94f68da727", "server": "5760", "farm": 6, "title": "Fall Pumpkin", "ispublic": 1, "isfriend": 0, "isfamily": 0 },
@@ -137,13 +114,45 @@ var thePuppies = [
       { "id": "13727754413", "owner": "62624768@N02", "secret": "ee14aeff69", "server": "7391", "farm": 8, "title": "", "ispublic": 1, "isfriend": 0, "isfamily": 0 }
 ];
 
+// URL for a flickr search for more puppies
+var puppy_flickr_url = "https://api.flickr.com/services/rest"+
+    "?method=flickr.photos.search"+
+    "&api_key={{262e2d8627a867729fa6c0bd0f0a2672}}"+
+    "&tags=guide+dog+puppy"+
+    "&tag_mode=all"+
+    "&per_page=32"+
+    "&asynchronous=false";
+
+// Get more puppies if possible, adding them to thePuppies
+jQuery.ajax({
+    dataTyle: "json",
+    url: puppy_flickr_url,
+    async: false,
+    success: function(data){
+    jQuery.each(data.photos.photo, function(i,item){
+	thePuppies.push(item);
+    });
+    }
+});
+
+
+// converts a puppy to its image URL
+function puppy_url(item){
+    var img_src = "http://farm"+item.farm+
+		".static.flickr.com/"+item.server+
+		"/"+item.id+
+		"_"+item.secret+
+		"_m.jpg";
+    return img_src
+}
+
+
 
 
 
 
 
 function detrump(thePuppies){
-
 	// called on page load. Searches all img alt text and srcs for the strings in blacklist, replaces with puppies
 	var pagepics=document.getElementsByTagName("img"), i=0, img;	
 	var blacklist = ["Trump","trump"];
@@ -155,15 +164,8 @@ function detrump(thePuppies){
 			var imgsrc = String(img.src);
 			imgsrc = imgsrc.toLowerCase();
 			if ((alttext.indexOf(blist) != -1) || (imgsrc.indexOf(blist) != -1)){
-			    var randp = Math.floor(Math.random() * 32) + 1
-
-			    var puppy_img_url =
-				"http://farm"+thePuppies[randp].farm+
-				".static.flickr.com/"+thePuppies[randp].server+
-				"/"+thePuppies[randp].id+
-				"_"+thePuppies[randp].secret+
-				"_b.jpg";
-			    img.src = puppy_img_url;
+			    var randp = Math.floor(Math.random() * thePuppies.length) + 1
+			    img.src = puppy_url(thePuppies[randp]);
 			    img.alt = "Raise a puppy change a life!";
 			};
 		});		
